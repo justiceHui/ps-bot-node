@@ -28,7 +28,7 @@ module.exports = {
             let ret = `[[${json.handle}]]\n`;
             if(json.rating === undefined) return ret + "라운드에 참가하지 않음";
             ret += `Rating : ${json.rating} (${json.rank})\n`;
-            ret += `Max Ratind : ${json.maxRating} (${json.maxRank})`;
+            ret += `Max Rating : ${json.maxRating} (${json.maxRank})`;
             return ret;
         } catch(e) {
             return `[[${handle}]]\n존재하지 않는 유저`;

@@ -4,7 +4,7 @@
   "description": "PS Bot API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha src/app.spec.js",
     "start": "node src/app.js"
   },
   "keywords": [],

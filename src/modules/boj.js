@@ -14,7 +14,7 @@ module.exports = {
     },
     searchProblem(query, body){
         let json = JSON.parse(body);
-        if(!json.hasOwnProperty('problems')) return '';
+        if(!json.hasOwnProperty('problems')) return `[[${decodeURI(query)}]]\nNone`;
         if(json.problems === undefined) return `[[${decodeURI(query)}]]\nNone`;
         
         let ret = `[[${decodeURI(query)}]]\nSpoiler Alert!${Util.BLANK_CHAR_500}+\n`;
@@ -43,6 +43,7 @@ module.exports = {
         return ret;
     },
     getProblemTag(prob, body){
+        if(body === '[]') return 'None';
         let json = JSON.parse(body);
         let arr = [], cnt = {};
         for(let i in json){
