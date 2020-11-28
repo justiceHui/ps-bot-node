@@ -71,7 +71,6 @@ describe('BOJ', function(){
         const qry = 'tier:d5..d1 tag:tag:segtree';
         res.on('end', function(){
             const str = res._getData();
-            assert(str.includes(qry));
             assert(str.includes('http://icpc.me/'));
             assert(!str.includes('None'));
             done();
@@ -84,7 +83,6 @@ describe('BOJ', function(){
         const qry = 'tier:b5 tag:tag:segtree';
         res.on('end', function(){
             const str = res._getData();
-            assert(str.includes(qry));
             assert(!str.includes('http://icpc.me/'));
             done();
         });
