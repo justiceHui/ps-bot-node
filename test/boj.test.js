@@ -19,6 +19,10 @@ describe('BOJ', function(){
         res.on('end', function(){
             const str = res._getData();
             assert(str.includes('Solved'));
+            assert(str.includes('Tier'));
+            assert(str.includes('Class'));
+            assert(str.includes('Contribute'));
+            assert(str.includes('solved.ac/profile'));
             assert(!str.includes('solved ac에 등록되지 않은 유저입니다.'));
             done();
         });
@@ -30,6 +34,10 @@ describe('BOJ', function(){
         res.on('end', function(){
             const str = res._getData();
             assert(!str.includes('Solved'));
+            assert(!str.includes('Tier'));
+            assert(!str.includes('Class'));
+            assert(!str.includes('Contribute'));
+            assert(!str.includes('solved.ac/profile'));
             assert(str.includes('solved ac에 등록되지 않은 유저입니다.'));
             done();
         });
