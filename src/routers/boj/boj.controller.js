@@ -1,5 +1,5 @@
 const request = require('request');
-const BOJ = require('../../modules/boj.js');
+const BOJ = require('../../modules/boj');
 
 module.exports = {
     getUser(req, res){

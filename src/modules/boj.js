@@ -1,4 +1,4 @@
-const Util = require('./Util.js');
+const Util = require('./Util');
 
 const tier = ['unranked', 'bronze5', 'bronze4', 'bronze3', 'bronze2', 'bronze1',
     'silver5', 'silver4', 'silver3', 'silver2', 'silver1',
@@ -6,6 +6,12 @@ const tier = ['unranked', 'bronze5', 'bronze4', 'bronze3', 'bronze2', 'bronze1',
     'platinum5', 'platinum4', 'platinum3', 'platinum2', 'platinum1',
     'diamond5', 'diamond4', 'diamond3', 'diamond2', 'diamond1',
     'ruby5', 'ruby4', 'ruby3', 'ruby2', 'ruby1'];
+
+function __getClassString(lv, deco){
+    if(deco === 1) return lv + '+';
+    if(deco === 2) return lv + '++';
+    return lv;
+}
 
 module.exports = {
     randomProblem(query, body){
@@ -15,7 +21,6 @@ module.exports = {
     searchProblem(query, body){
         let json = JSON.parse(body);
         if(!json.hasOwnProperty('problems')) return `[[${decodeURI(query)}]]\nNone`;
-        if(json.problems === undefined) return `[[${decodeURI(query)}]]\nNone`;
         
         let ret = `[[${decodeURI(query)}]]\nSpoiler Alert!${Util.BLANK_CHAR_500}+\n`;
         for(let i in json.problems){
@@ -24,21 +29,24 @@ module.exports = {
         }
         return ret;
     },
-    __getClassString(lv, deco){
-        if(deco === 1) return lv + '+';
-        if(deco === 2) return lv + '++';
-        return lv;
-    },
     getUser(id, body){
         let json = JSON.parse(body);
-        if(json.user_id === undefined){
+        if(!json.hasOwnProperty('user_id') || json.user_id === undefined){
             return `[[${id}]]\nsolved ac에 등록되지 않은 유저입니다. BOJ 설정에서 정보 제공 동의를 해주세요.`
         }
         let ret = `[[${json.user_id}]]\n`;
-        ret += `Solved : ${json.solved}\n`;
-        ret += `Tier : ${tier[json.level]} (${Util.numberCut(json.exp)})\n`;
-        ret += `Class : ${this.__getClassString(json.class, json.class_decoration)}\n`;
-        ret += `Contribute : ${json.vote_count}\n`;
+        if(json.hasOwnProperty('solved')){
+            ret += `Solved : ${json.solved}\n`;
+        }
+        if(json.hasOwnProperty('level') && json.hasOwnProperty('exp')){
+            ret += `Tier : ${tier[json.level]} (${Util.numberCut(json.exp)})\n`;
+        }
+        if(json.hasOwnProperty('class') && json.hasOwnProperty('class_decoration')){
+            ret += `Class : ${__getClassString(json.class, json.class_decoration)}\n`;
+        }
+        if(json.hasOwnProperty('vote_count')){
+            ret += `Contribute : ${json.vote_count}\n`;
+        }
         ret += `\nhttps://solved.ac/profile/${id}`;
         return ret;
     },
@@ -48,9 +56,12 @@ module.exports = {
         let arr = [], cnt = {};
         for(let i in json){
             if(!json.hasOwnProperty(i)) continue;
-            for(let j in json[i].algorithms){
-                if(!json[i].algorithms.hasOwnProperty(j)) continue;
-                let now = json[i].algorithms[j].short_name_en;
+            if(!json[i].hasOwnProperty('algorithms')) continue;
+            let tagArr = json[i].algorithms;
+            for(let j in tagArr){
+                if(!tagArr.hasOwnProperty(j)) continue;
+                if(!tagArr[j].hasOwnProperty('short_name_en')) continue;
+                let now = tagArr[j].short_name_en;
                 if(arr.indexOf(now) === -1) { arr.push(now); cnt[now] = 0; }
                 cnt[now]++;
             }

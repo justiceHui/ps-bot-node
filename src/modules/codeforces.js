@@ -26,9 +26,13 @@ module.exports = {
             if(json.status !== 'OK') return `[[${handle}]]\n존재하지 않는 유저`;
             json = json.result[0];
             let ret = `[[${json.handle}]]\n`;
-            if(json.rating === undefined) return ret + "라운드에 참가하지 않음";
-            ret += `Rating : ${json.rating} (${json.rank})\n`;
-            ret += `Max Rating : ${json.maxRating} (${json.maxRank})`;
+            if(!json.hasOwnProperty('rating')) return ret + "라운드에 참가하지 않음";
+            if(json.hasOwnProperty('rating') && json.hasOwnProperty('rank')){
+                ret += `Rating : ${json.rating} (${json.rank})\n`;
+            }
+            if(json.hasOwnProperty('maxRating') && json.hasOwnProperty('maxRank')){
+                ret += `Max Rating : ${json.maxRating} (${json.maxRank})`;
+            }
             return ret;
         } catch(e) {
             return `[[${handle}]]\n존재하지 않는 유저`;

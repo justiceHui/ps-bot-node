@@ -1,5 +1,5 @@
 const request = require('request');
-const CF = require('../../modules/codeforces.js');
+const CF = require('../../modules/codeforces');
 
 module.exports = {
     getRound(req, res){

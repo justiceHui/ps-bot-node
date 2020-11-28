@@ -1,5 +1,6 @@
 const describe = require('mocha').describe;
 const beforeEach = require('mocha').beforeEach;
+const it = require('mocha').it;
 const httpMocks = require('node-mocks-http');
 const assert = require('assert');
 
