@@ -22,7 +22,7 @@ module.exports = {
         let json = JSON.parse(body);
         if(!json.hasOwnProperty('problems')) return `[[${decodeURI(query)}]]\nNone`;
         
-        let ret = `[[${decodeURI(query)}]]\nSpoiler Alert!${Util.BLANK_CHAR_500}+\n`;
+        let ret = '';
         for(let i in json.problems){
             if(!json.problems.hasOwnProperty(i)) continue;
             ret += `${json.problems[i].title} http://icpc.me/${json.problems[i].id}\n`;
@@ -68,7 +68,7 @@ module.exports = {
         }
         arr.sort((a, b) => { return cnt[b] - cnt[a]; });
         const link = 'http://icpc.me/' + prob;
-        let ret = `[[${prob}'s tag]]\nlink : ${link}\nSpoiler Alert!${Util.BLANK_CHAR_500}\n`;
+        let ret = '';
         for(let i in arr) if(arr.hasOwnProperty(i)) ret += arr[i] + '\n';
         return ret;
     }
