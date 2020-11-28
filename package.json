@@ -1,0 +1,20 @@
+{
+  "name": "ps-bot-node",
+  "version": "1.0.0",
+  "description": "PS Bot API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "keywords": [],
+  "author": "JusticeHui",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mocha": "^8.2.1",
+    "node-mocks-http": "^1.9.0",
+    "request": "^2.88.2",
+    "should": "^13.2.3"
+  }
+}
