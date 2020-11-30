@@ -26,7 +26,7 @@ describe('BOJ', function(){
             assert(!str.includes('solved ac에 등록되지 않은 유저입니다.'));
             done();
         });
-        req.params.handle = 'jhnah917';
+        req.params[0] = 'jhnah917';
         BOJ.getUser(req, res);
     });
     it('User: jhnah918(Not Exist)', function(done){
@@ -41,7 +41,7 @@ describe('BOJ', function(){
             assert(str.includes('solved ac에 등록되지 않은 유저입니다.'));
             done();
         });
-        req.params.handle = 'jhnah918';
+        req.params[0] = 'jhnah918';
         BOJ.getUser(req, res);
     });
     it('Random Problem: Normal Query', function(done){
@@ -52,7 +52,29 @@ describe('BOJ', function(){
             assert(!str.includes('None'));
             done();
         });
-        req.params.query = encodeURI('tier:d5..d1 tag:tag:segtree');
+        req.params[0] = encodeURI('tier:d5..d1 tag:tag:segtree');
+        BOJ.getRandomProblem(req, res);
+    });
+    it('Random Problem: Contain Slash', function(done){
+        this.timeout(30000);
+        res.on('end', function(){
+            const str = res._getData();
+            assert(str.includes('http://icpc.me/'));
+            assert(!str.includes('None'));
+            done();
+        });
+        req.params[0] = encodeURI('</span>');
+        BOJ.getRandomProblem(req, res);
+    });
+    it('Random Problem: Contain Korean', function(done){
+        this.timeout(30000);
+        res.on('end', function(){
+            const str = res._getData();
+            assert(str.includes('http://icpc.me/'));
+            assert(!str.includes('None'));
+            done();
+        });
+        req.params[0] = encodeURI('트리의 색깔과 쿼리');
         BOJ.getRandomProblem(req, res);
     });
     it('Random Problem: Not Exist', function(done){
@@ -63,7 +85,7 @@ describe('BOJ', function(){
             assert(str.includes('None'));
             done();
         });
-        req.params.query = encodeURI('tier:b5 tag:tag:segtree');
+        req.params[0] = encodeURI('tier:b5 tag:tag:segtree');
         BOJ.getRandomProblem(req, res);
     });
     it('Search Problem: Normal Query', function(done){
@@ -75,7 +97,7 @@ describe('BOJ', function(){
             assert(!str.includes('None'));
             done();
         });
-        req.params.query = encodeURI(qry);
+        req.params[0] = encodeURI(qry);
         BOJ.searchProblem(req, res);
     });
     it('Search Problem: Not Exist', function(done){
@@ -86,7 +108,7 @@ describe('BOJ', function(){
             assert(!str.includes('http://icpc.me/'));
             done();
         });
-        req.params.query = encodeURI(qry);
+        req.params[0] = encodeURI(qry);
         BOJ.searchProblem(req, res);
     });
     it('Problem Tag: 1000(Normal Query)', function(done){
@@ -97,7 +119,7 @@ describe('BOJ', function(){
             assert(!str.includes('None'));
             done();
         })
-        req.params.prob = 1000;
+        req.params[0] = 1000;
         BOJ.getProblemTag(req, res);
     });
     it('Problem Tag: 917(Not Exist)', function(done){
@@ -107,7 +129,7 @@ describe('BOJ', function(){
             assert(str === 'None');
             done();
         });
-        req.params.prob = 917;
+        req.params[0] = 917;
         BOJ.getProblemTag(req, res);
     });
 });

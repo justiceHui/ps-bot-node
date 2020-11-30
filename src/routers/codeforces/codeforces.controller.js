@@ -9,7 +9,7 @@ module.exports = {
         });
     },
     getUser(req, res){
-        const handle = req.params.handle;
+        const handle = req.params[0];
         const url = 'https://codeforces.com/api/user.info?handles=' + handle;
         request.get({ url: url }, function(error, response, body){
             res.send(CF.getUser(handle, body));

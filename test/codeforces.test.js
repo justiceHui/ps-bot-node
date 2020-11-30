@@ -33,7 +33,7 @@ describe('Codeforces', function(){
             assert(!str.includes('존재하지 않는 유저'));
             done();
         });
-        req.params.handle = 'tourist';
+        req.params[0] = 'tourist';
         CF.getUser(req, res);
     });
     it('User: MikeMirzayanov(Never Participate Round)', function(done){
@@ -46,7 +46,7 @@ describe('Codeforces', function(){
             assert(!str.includes('존재하지 않는 유저'));
             done();
         });
-        req.params.handle = 'MikeMirzayanov';
+        req.params[0] = 'MikeMirzayanov';
         CF.getUser(req, res);
     });
     it('User: tourist917(Not Exist)', function(done){
@@ -59,7 +59,7 @@ describe('Codeforces', function(){
             assert(str.includes('존재하지 않는 유저'));
             done();
         });
-        req.params.handle = 'tourist917';
+        req.params[0] = 'tourist917';
         CF.getUser(req, res);
     });
 });
