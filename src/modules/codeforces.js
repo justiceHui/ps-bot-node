@@ -1,3 +1,5 @@
+const TIME_ZONE = +9;
+
 module.exports = {
     getRound(body){
         let json = JSON.parse(body);
@@ -11,7 +13,7 @@ module.exports = {
         contests.reverse();
         let ret = '[[ Upcoming Rounds ]]\n';
         for(let i=0; i<contests.length; i++){
-            const d = new Date(contests[i].startTimeSeconds * 1000);
+            const d = new Date((contests[i].startTimeSeconds + TIME_ZONE*60*60) * 1000);
             ret += contests[i].name + ' : '
                 + (d.getMonth() + 1) + '/'
                 + d.getDate() + ' '
