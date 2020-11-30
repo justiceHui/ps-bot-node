@@ -10,14 +10,14 @@ module.exports = {
         });
     },
     getRandomProblem(req, res){
-        const query = req.params[0];
+        const query = encodeURI(req.params[0]);
         const url = 'https://api.solved.ac/search/random_search.json?query=' + query;
         request.get({ url: url }, function(error, response, body){
             res.send(BOJ.randomProblem(query, body));
         });
     },
     searchProblem(req, res){
-        const query = req.params[0];
+        const query = encodeURI(req.params[0]);
         const url = 'https://api.solved.ac//search/search_recommendations.json?query=' + query;
         request.get({ url: url }, function(error, response, body){
             res.send(BOJ.searchProblem(query, body));
