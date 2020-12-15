@@ -31,9 +31,10 @@ module.exports = {
     },
     getUser(id, body){
         let json = JSON.parse(body);
-        if(!json.hasOwnProperty('user_id') || json.user_id === undefined){
+        if(!json['success']){
             return `[[${id}]]\nsolved ac에 등록되지 않은 유저입니다. BOJ 설정에서 정보 제공 동의를 해주세요.`
         }
+        json = json['result']['user'][0];
         let ret = `[[${json.user_id}]]\n`;
         if(json.hasOwnProperty('solved')){
             ret += `Solved : ${json.solved}\n`;
@@ -51,25 +52,18 @@ module.exports = {
         return ret;
     },
     getProblemTag(prob, body){
-        if(body === '[]') return 'None';
         let json = JSON.parse(body);
-        let arr = [], cnt = {};
-        for(let i in json){
-            if(!json.hasOwnProperty(i)) continue;
-            if(!json[i].hasOwnProperty('algorithms')) continue;
-            let tagArr = json[i].algorithms;
-            for(let j in tagArr){
-                if(!tagArr.hasOwnProperty(j)) continue;
-                if(!tagArr[j].hasOwnProperty('short_name_en')) continue;
-                let now = tagArr[j].short_name_en;
-                if(arr.indexOf(now) === -1) { arr.push(now); cnt[now] = 0; }
-                cnt[now]++;
-            }
-        }
-        arr.sort((a, b) => { return cnt[b] - cnt[a]; });
-        const link = 'http://icpc.me/' + prob;
+        if(!json['success']) return 'None';
+        if(json['result']['problems'].length === 0) return 'None';
+        json = json['result']['problems'][0];
+
         let ret = '';
-        for(let i in arr) if(arr.hasOwnProperty(i)) ret += arr[i] + '\n';
+        ret += `BOJ ${json['id']} ${json['title']}\n`;
+        let tag_arr = json['tags'];
+        for(let i in tag_arr){
+            if(!tag_arr.hasOwnProperty(i)) continue;
+            ret += tag_arr[i]['tag_name'] + '\n';
+        }
         return ret;
     }
 };

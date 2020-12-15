@@ -4,7 +4,7 @@ const BOJ = require('../../modules/boj');
 module.exports = {
     getUser(req, res){
         const handle = req.params[0];
-        const url = 'https://api.solved.ac/user_information.php?id=' + handle;
+        const url = 'https://api.solved.ac/v2/users/show.json?id=' + handle;
         request.get({ url: url }, function(error, response, body){
             res.send(BOJ.getUser(handle, body));
         });
@@ -18,14 +18,14 @@ module.exports = {
     },
     searchProblem(req, res){
         const query = encodeURI(req.params[0]);
-        const url = 'https://api.solved.ac//search/search_recommendations.json?query=' + query;
+        const url = 'https://api.solved.ac/search/search_recommendations.json?query=' + query;
         request.get({ url: url }, function(error, response, body){
             res.send(BOJ.searchProblem(query, body));
         });
     },
     getProblemTag(req, res){
         const prob = req.params[0];
-        const url = 'https://api.solved.ac/question_level_votes.php?id=' + prob;
+        const url = 'https://api.solved.ac/v2/problems/show.json?id=' + prob;
         request.get({ url: url }, function(error, response, body){
             res.send(BOJ.getProblemTag(prob, body));
         });

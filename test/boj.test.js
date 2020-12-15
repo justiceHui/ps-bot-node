@@ -118,7 +118,7 @@ describe('BOJ', function(){
         this.timeout(30000);
         res.on('end', function(){
             const str = res._getData();
-            assert(str.includes('Impl'));
+            assert(str.includes('implementation'));
             assert(!str.includes('None'));
             done();
         })
