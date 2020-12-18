@@ -21,7 +21,7 @@ module.exports = {
     searchProblem(query, body){
         let json = JSON.parse(body);
         if(!json.hasOwnProperty('problems')) return `[[${decodeURI(query)}]]\nNone`;
-        
+
         let ret = '';
         for(let i in json.problems){
             if(!json.problems.hasOwnProperty(i)) continue;
@@ -65,6 +65,13 @@ module.exports = {
             ret += tag_arr[i]['tag_name'] + '\n';
         }
         return ret;
+    },
+    getProblemName(prob, body) {
+        let json = JSON.parse(body);
+        if(!json['success']) return 'None';
+        if(json['result']['problems'].length === 0) return 'None';
+        json = json['result']['problems'][0];
+        return `${json['title']}`;
     }
 };
 

@@ -8,5 +8,5 @@ router.get(/\/tag\/(\d+)/, BOJ.getProblemTag);
 router.get('/', (req, res) => {
     res.send('boj');
 });
+router.get(/\/problem_name\/(.+)/, BOJ.getProblemName);
 module.exports = router;
-

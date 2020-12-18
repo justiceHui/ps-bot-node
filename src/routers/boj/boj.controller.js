@@ -29,5 +29,12 @@ module.exports = {
         request.get({ url: url }, function(error, response, body){
             res.send(BOJ.getProblemTag(prob, body));
         });
+    },
+    getProblemName(req, res) {
+        const prob = req.params[0];
+        const url = 'https://api.solved.ac/v2/problems/show.json?id=' + prob;
+        request.get({ url: url }, function(error, response, body){
+            res.send(BOJ.getProblemName(prob, body));
+        });
     }
 };
